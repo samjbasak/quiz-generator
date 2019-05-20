@@ -29,19 +29,30 @@ categories = {'General Knowledge': 9, 'Entertainment: Books': 10, 'Enterainment:
 		'Entertainment: Japanese Anime & Manga': 31, 'Entertainment: Cartoons & Animation': 32}
 
 def get_questions_from_json(num_questions=10, difficulty=None, category=None, qtype=None):
+    '''
+    Function takes some parameters and returns a list of dictionaries
+    Each item in the list is a dictionary containing details of a question
+    For parameter details see create url function
+    '''
     response = requests.get(create_url(num_questions, difficulty, category, qtype))
     response = response.json()
     return response['results']
 
 def randomly_order_list(list_of_answers):
+    '''
+    Takes a list of answers, shuffles them and returns the list shuffled
+    Each question automatically comes with multiple answers, the first of which is the correct one
+    This means you don't have the shuffle after
+    '''
     random.shuffle(list_of_answers)
-    return html.unescape(list_of_answers)
+    return list_of_answers
 
 def remove_crap_out_of_answers(list_of_answers):
-    clean_list = []
-    for idx in list_of_answers:
-        clean_list.append(html.unescape(idx))
-    return clean_list
+    '''
+    When results are returned they often have weird characters and formatting
+    This function removes that out
+    '''
+    return [html.unescape(idx) for idx in list_of_answers]
 
 def reformat_answers_list(correct_answer, incorrect_answer):
     randomly_ordered_answers = randomly_order_list([correct_answer] + incorrect_answer)
@@ -56,5 +67,5 @@ def display_results(questions_to_be_displayed):
         print('Answer:', idx['correct_answer'].replace('&quot:', ''))
         print('')
 
-response = get_questions_from_json(num_questions=20, category=18)
+response = get_questions_from_json(num_questions=20, category=14)
 display_results(response)
