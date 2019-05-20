@@ -55,10 +55,16 @@ def remove_crap_out_of_answers(list_of_answers):
     return [html.unescape(idx) for idx in list_of_answers]
 
 def reformat_answers_list(correct_answer, incorrect_answer):
+    '''
+    Takes answers, reformats and reorders them
+    '''
     randomly_ordered_answers = randomly_order_list([correct_answer] + incorrect_answer)
     return remove_crap_out_of_answers(randomly_ordered_answers)
 
 def display_results(questions_to_be_displayed):
+    '''
+    For each question in a list of questions display the question and answer
+    '''
     for counter, idx in enumerate(questions_to_be_displayed):
         print('Question:', counter+1)
         print(html.unescape(idx['question']))
