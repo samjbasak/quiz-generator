@@ -19,6 +19,9 @@ def create_url(num_questions=10, difficulty=None, category=None, qtype=None):
         url += '&type=' + str(qtype)
     return url
 
+print(create_url(num_questions=10, difficulty='hard', category=9, qtype='multiple'))
+
+#A dictionary showing all the possible characters
 categories = {'General Knowledge': 9, 'Entertainment: Books': 10, 'Enterainment: Films': 11,
 		'Entertainment: Music': 12, 'Entertainment: Musicals & Theatre': 13,
 		'Entertainment: Television': 14, 'Entertainment: Video Games': 15,
@@ -37,6 +40,8 @@ def get_questions_from_json(num_questions=10, difficulty=None, category=None, qt
     response = requests.get(create_url(num_questions, difficulty, category, qtype))
     response = response.json()
     return response['results']
+
+#print(get_questions_from_json(num_questions=2))
 
 def randomly_order_list(list_of_answers):
     '''
